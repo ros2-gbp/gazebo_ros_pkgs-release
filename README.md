@@ -1,1 +1,29 @@
+## gazebo_ros_pkgs (crystal) - 3.0.0-0
+
+The packages in the `gazebo_ros_pkgs` repository were released into the `crystal` distro by running `/usr/bin/bloom-release --rosdistro crystal --track crystal gazebo_ros_pkgs --edit` on `Fri, 07 Dec 2018 22:39:20 -0000`
+
+These packages were released:
+- `gazebo_dev`
+- `gazebo_msgs`
+- `gazebo_plugins`
+- `gazebo_ros`
+- `gazebo_ros_pkgs`
+
+Version of package(s) in repository `gazebo_ros_pkgs`:
+
+- upstream repository: https://github.com/ros-simulation/gazebo_ros_pkgs
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `3.0.0-0`
+
+Versions of tools used:
+
+- bloom version: `0.6.9`
+- catkin_pkg version: `0.4.9`
+- rosdep version: `0.13.0`
+- rosdistro version: `0.7.0`
+- vcstools version: `0.1.40`
+
+
 # gazebo_ros_pkgs-release
