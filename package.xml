@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>gazebo_ros</name>
-  <version>3.1.0</version>
+  <version>3.2.0</version>
   <description>
     Utilities to interface with <a href="http://gazebosim.org">Gazebo</a> through ROS.
   </description>
@@ -25,6 +25,7 @@
   <depend>gazebo_dev</depend>
   <depend>gazebo_msgs</depend>
   <depend>rclcpp</depend>
+  <depend>std_srvs</depend>
   <depend>tinyxml_vendor</depend>
 
   <build_export_depend>geometry_msgs</build_export_depend>
