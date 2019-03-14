@@ -1,0 +1,12 @@
+Source: ros-crystal-gazebo-msgs
+Section: misc
+Priority: extra
+Maintainer: Jose Luis Rivero <jrivero@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-crystal-ament-cmake, ros-crystal-ament-lint-common, ros-crystal-builtin-interfaces, ros-crystal-geometry-msgs, ros-crystal-rosidl-default-generators, ros-crystal-std-msgs, ros-crystal-trajectory-msgs, ros-crystal-ros-workspace, ros-crystal-rmw-connext-cpp, ros-crystal-rmw-fastrtps-cpp, ros-crystal-rmw-implementation, ros-crystal-rmw-opensplice-cpp, ros-crystal-rosidl-typesupport-connext-c, ros-crystal-rosidl-typesupport-connext-cpp, ros-crystal-rosidl-typesupport-opensplice-c, ros-crystal-rosidl-typesupport-opensplice-cpp
+Homepage: http://gazebosim.org/tutorials?cat=connect_ros
+Standards-Version: 3.9.2
+
+Package: ros-crystal-gazebo-msgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-crystal-builtin-interfaces, ros-crystal-geometry-msgs, ros-crystal-rosidl-default-runtime, ros-crystal-std-msgs, ros-crystal-trajectory-msgs, ros-crystal-ros-workspace
+Description: Message and service data structures for interacting with Gazebo from ROS2.
