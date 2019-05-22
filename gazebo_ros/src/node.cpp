@@ -77,14 +77,17 @@ Node::SharedPtr Node::Get(sdf::ElementPtr sdf)
     }
   }
 
-  // Use default context
-  auto context = rclcpp::contexts::default_context::get_global_default_context();
+  rclcpp::NodeOptions node_options;
+  node_options.allow_undeclared_parameters(true);
+  node_options.arguments(arguments);
+  // TODO(anyone) can't set at construction, see
+  // https://github.com/ros2/rclcpp/issues/730
+  // node_options.initial_parameters(initial_parameters);
 
   // Create node with parsed arguments
-  return CreateWithArgs(
-    name, ns,
-    context,
-    arguments, initial_parameters);
+  auto node = CreateWithArgs(name, ns, node_options);
+  node->set_parameters(initial_parameters);
+  return node;
 }
 
 Node::SharedPtr Node::Get()
@@ -92,7 +95,9 @@ Node::SharedPtr Node::Get()
   Node::SharedPtr node = static_node_.lock();
 
   if (!node) {
-    node = CreateWithArgs("gazebo");
+    rclcpp::NodeOptions node_options;
+    node_options.allow_undeclared_parameters(true);
+    node = CreateWithArgs("gazebo", "", node_options);
     static_node_ = node;
   }
 

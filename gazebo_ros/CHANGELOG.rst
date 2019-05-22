@@ -2,14 +2,19 @@
 Changelog for package gazebo_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.2.0 (2019-03-13)
+3.3.0 (2019-05-21)
 ------------------
-* [ros2] Disable test_node to clean CI (`#901 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/901>`_)
-  * [ros2] Disable test_node to clean CI
-  * uncrustify
-* [ros2] Port time commands (pause / reset) (`#866 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/866>`_)
-* [ros2] World plugin to get/set entity state services (`#839 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/839>`_)
-  remove status_message
+* use latest dashing api (`#926 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/926>`_)
+  * [gazebo_ros] use qos
+  Signed-off-by: Karsten Knese <karsten@openrobotics.org>
+  * [gazebo_ros] avoid unused warning
+  Signed-off-by: Karsten Knese <karsten@openrobotics.org>
+  * [gazebo_plugins] use qos
+  Signed-off-by: Karsten Knese <karsten@openrobotics.org>
+  * allow_undeclared_parameters
+  * fix tests
+  * forward port pull request `#901 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/901>`_
+* Fix build to account for new NodeOptions interface. (`#887 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/887>`_)
 * Fix Windows conflicting macros and missing usleep (`#885 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/885>`_)
   * Fix conflicting Windows macros and missing usleep
   * fix spacing
@@ -17,7 +22,7 @@ Changelog for package gazebo_ros
   * remove lint
 * Call rclcpp::init() only from gazebo_ros_init (`#859 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/859>`_)
 * [ros] Revert sim time test (`#853 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/853>`_)
-* Contributors: Jonathan Noyola, Tamaki Nishino, chapulina
+* Contributors: Carl Delsey, Jonathan Noyola, Karsten Knese, Tamaki Nishino, chapulina
 
 3.1.0 (2018-12-10)
 ------------------

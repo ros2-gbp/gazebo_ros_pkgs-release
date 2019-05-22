@@ -2,10 +2,23 @@
 Changelog for package gazebo_plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.2.0 (2019-03-13)
+3.3.0 (2019-05-21)
 ------------------
-* [ros2] World plugin to get/set entity state services (`#839 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/839>`_)
-  remove status_message
+* use latest dashing api (`#926 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/926>`_)
+  * [gazebo_ros] use qos
+  Signed-off-by: Karsten Knese <karsten@openrobotics.org>
+  * [gazebo_ros] avoid unused warning
+  Signed-off-by: Karsten Knese <karsten@openrobotics.org>
+  * [gazebo_plugins] use qos
+  Signed-off-by: Karsten Knese <karsten@openrobotics.org>
+  * allow_undeclared_parameters
+  * fix tests
+  * forward port pull request `#901 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/901>`_
+* [ros2] Port video plugin to ros2 (`#899 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/899>`_)
+  * [ros2] Port video plugin to ros2
+  * Fix test for gazebo_ros_video
+* use `.c_str()` for variadic template (`#914 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/914>`_)
+  Not sure why this never was a problem, but I had to fix this in order to make it compile on OSX.
 * [ros2] Fix diff_drive error message (`#882 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/882>`_)
 * Fix Windows conflicting macros and missing usleep (`#885 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/885>`_)
   * Fix conflicting Windows macros and missing usleep
@@ -20,7 +33,7 @@ Changelog for package gazebo_plugins
   * demo, test, and a bit more cleaning up
   * linters
 * [ros2] ENABLE_DISPLAY_TESTS, and make camera tests more robust (`#854 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/854>`_)
-* Contributors: Jonathan Noyola, Michael Jeronimo, Romain Reignier, chapulina
+* Contributors: Jonathan Noyola, Karsten Knese, Michael Jeronimo, Romain Reignier, Shivesh Khaitan, chapulina
 
 3.1.0 (2018-12-10)
 ------------------

@@ -18,7 +18,6 @@ find_package(rclcpp REQUIRED)
 find_package(gazebo_dev REQUIRED)
 find_package(gazebo_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(std_srvs REQUIRED)
 find_package(tinyxml_vendor REQUIRED)
 
 include_directories(
@@ -55,7 +54,6 @@ ament_target_dependencies(gazebo_ros_init
   "builtin_interfaces"
   "gazebo_dev"
   "rclcpp"
-  "std_srvs"
 )
 target_link_libraries(gazebo_ros_init
   gazebo_ros_node
@@ -78,20 +76,6 @@ target_link_libraries(gazebo_ros_factory
 )
 ament_export_libraries(gazebo_ros_factory)
 
-# gazebo_ros_state
-add_library(gazebo_ros_state SHARED
-  src/gazebo_ros_state.cpp
-)
-ament_target_dependencies(gazebo_ros_state
-  "rclcpp"
-  "gazebo_dev"
-  "gazebo_msgs"
-)
-target_link_libraries(gazebo_ros_state
-  gazebo_ros_node
-)
-ament_export_libraries(gazebo_ros_state)
-
 ament_export_include_directories(include)
 ament_export_dependencies(rclcpp)
 ament_export_dependencies(gazebo_dev)
@@ -112,7 +96,6 @@ install(
     gazebo_ros_factory
     gazebo_ros_init
     gazebo_ros_node
-    gazebo_ros_state
     gazebo_ros_utils
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
