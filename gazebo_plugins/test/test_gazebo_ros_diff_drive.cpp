@@ -19,19 +19,29 @@
 #include <nav_msgs/msg/odometry.hpp>
 
 #include <memory>
+#include <string>
 
 #define tol 10e-2
 
 using namespace std::literals::chrono_literals; // NOLINT
 
-class GazeboRosDiffDriveTest : public gazebo::ServerFixture
+/// Test parameters
+struct TestParams
+{
+  /// Path to world file
+  std::string world;
+};
+
+
+class GazeboRosDiffDriveTest
+  : public gazebo::ServerFixture, public ::testing::WithParamInterface<TestParams>
 {
 };
 
-TEST_F(GazeboRosDiffDriveTest, Publishing)
+TEST_P(GazeboRosDiffDriveTest, Publishing)
 {
   // Load test world and start paused
-  this->Load("worlds/gazebo_ros_diff_drive.world", true);
+  this->Load(GetParam().world, true);
 
   // World
   auto world = gazebo::physics::get_world();
@@ -57,7 +67,7 @@ TEST_F(GazeboRosDiffDriveTest, Publishing)
     });
 
   // Step a bit for model to settle
-  world->Step(100);
+  world->Step(200);
   executor.spin_once(100ms);
 
   // Check model state
@@ -79,9 +89,17 @@ TEST_F(GazeboRosDiffDriveTest, Publishing)
   // Wait for it to be processed
   int sleep{0};
   int maxSleep{300};
-  for (; sleep < maxSleep && (vehicle->WorldLinearVel().X() < 0.9 ||
+
+  auto yaw = static_cast<float>(vehicle->WorldPose().Rot().Yaw());
+  auto linear_vel = vehicle->WorldLinearVel();
+  double linear_vel_x = cosf(yaw) * linear_vel.X() + sinf(yaw) * linear_vel.Y();
+
+  for (; sleep < maxSleep && (linear_vel_x < 0.9 ||
     vehicle->WorldAngularVel().Z() < 0.09); ++sleep)
   {
+    yaw = static_cast<float>(vehicle->WorldPose().Rot().Yaw());
+    linear_vel = vehicle->WorldLinearVel();
+    linear_vel_x = cosf(yaw) * linear_vel.X() + sinf(yaw) * linear_vel.Y();
     world->Step(100);
     executor.spin_once(100ms);
     gazebo::common::Time::MSleep(100);
@@ -95,15 +113,25 @@ TEST_F(GazeboRosDiffDriveTest, Publishing)
   EXPECT_LT(0.0, latestMsg->pose.pose.orientation.z);
 
   // Check movement
+  yaw = static_cast<float>(vehicle->WorldPose().Rot().Yaw());
+  linear_vel = vehicle->WorldLinearVel();
+  linear_vel_x = cosf(yaw) * linear_vel.X() + sinf(yaw) * linear_vel.Y();
   EXPECT_LT(0.0, vehicle->WorldPose().Pos().X());
-  EXPECT_LT(0.0, vehicle->WorldPose().Rot().Yaw());
-  EXPECT_NEAR(1.0, vehicle->WorldLinearVel().X(), tol);
+  EXPECT_LT(0.0, yaw);
+  EXPECT_NEAR(1.0, linear_vel_x, tol);
   EXPECT_NEAR(0.1, vehicle->WorldAngularVel().Z(), tol);
 }
+
+INSTANTIATE_TEST_CASE_P(GazeboRosDiffDrive, GazeboRosDiffDriveTest, ::testing::Values(
+    TestParams({"worlds/gazebo_ros_diff_drive.world"}),
+    TestParams({"worlds/gazebo_ros_skid_steer_drive.world"})
+  ), );
 
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
   ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  int ret = RUN_ALL_TESTS();
+  rclcpp::shutdown();
+  return ret;
 }
