@@ -32,6 +32,10 @@
 #include <mutex>
 #include <string>
 
+// Not installed on Dashing because it will be removed on Eloquent
+#include "gazebo_ros_depth_camera.hpp"
+#include "gazebo_ros_multi_camera.hpp"
+
 namespace gazebo_plugins
 {
 class GazeboRosCameraPrivate
@@ -72,6 +76,12 @@ public:
 
   /// Protects trigger.
   std::mutex trigger_mutex_;
+
+  /// Pointer to GazeboROS Depth Camera
+  std::shared_ptr<GazeboRosDepthCamera> depth_camera_;
+
+  /// Pointer to GazeboROS Multi Camera
+  std::shared_ptr<GazeboRosMultiCamera> multi_camera_;
 };
 
 GazeboRosCamera::GazeboRosCamera()
@@ -82,14 +92,20 @@ GazeboRosCamera::GazeboRosCamera()
 GazeboRosCamera::~GazeboRosCamera()
 {
   impl_->image_pub_.shutdown();
-
-  // TODO(louise) Why does this hang for the 2nd camera plugin?
-  // Commenting it out here just pushes the problem somewhere else.
-  // impl_->ros_node_.reset();
 }
 
 void GazeboRosCamera::Load(gazebo::sensors::SensorPtr _sensor, sdf::ElementPtr _sdf)
 {
+  if (std::dynamic_pointer_cast<gazebo::sensors::DepthCameraSensor>(_sensor)) {
+    impl_->depth_camera_ = std::make_shared<GazeboRosDepthCamera>();
+    impl_->depth_camera_->Load(_sensor, _sdf);
+    return;
+  } else if (std::dynamic_pointer_cast<gazebo::sensors::MultiCameraSensor>(_sensor)) {
+    impl_->multi_camera_ = std::make_shared<GazeboRosMultiCamera>();
+    impl_->multi_camera_->Load(_sensor, _sdf);
+    return;
+  }
+
   gazebo::CameraPlugin::Load(_sensor, _sdf);
 
   // Camera name
