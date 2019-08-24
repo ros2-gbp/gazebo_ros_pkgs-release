@@ -1,4 +1,15 @@
 <?xml version="1.0"?>
+<!--
+  Gazebo ROS hand of god plugin demo
+
+  Try for example:
+
+  ros2 run tf2_ros static_transform_publisher 0 0 10 0 0 0 1 world link_desired
+
+  Try listening to TF:
+
+  ros2 run tf2_ros tf2_echo world link_actual
+-->
 <sdf version="1.6">
   <world name="default">
     <include>
@@ -9,7 +20,7 @@
     </include>
     <model name="box">
       <pose>0 0 0.5 0 0 0</pose>
-      <link name="box_link">
+      <link name="link">
         <collision name="collision">
           <geometry>
             <box>
@@ -25,13 +36,12 @@
           </geometry>
         </visual>
       </link>
-      <plugin name="gazebo_ros_force" filename="libgazebo_ros_force.so">
+      <plugin name="hand_of_god" filename="libgazebo_ros_hand_of_god.so">
         <ros>
-          <namespace>/test</namespace>
-          <argument>gazebo_ros_force:=force_test</argument>
+          <namespace>/demo</namespace>
         </ros>
-        <link_name>box_link</link_name>
-        <force_frame>world</force_frame>
+        <link_name>link</link_name>
+        <frame_id>link</frame_id>
       </plugin>
     </model>
   </world>
