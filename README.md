@@ -1,3 +1,31 @@
+## gazebo_ros_pkgs (dashing) - 3.3.3-1
+
+The packages in the `gazebo_ros_pkgs` repository were released into the `dashing` distro by running `/usr/bin/bloom-release --rosdistro dashing --track dashing gazebo_ros_pkgs` on `Sat, 24 Aug 2019 01:13:38 -0000`
+
+These packages were released:
+- `gazebo_dev`
+- `gazebo_msgs`
+- `gazebo_plugins`
+- `gazebo_ros`
+- `gazebo_ros_pkgs`
+
+Version of package(s) in repository `gazebo_ros_pkgs`:
+
+- upstream repository: https://github.com/ros-simulation/gazebo_ros_pkgs
+- release repository: https://github.com/ros2-gbp/gazebo_ros_pkgs-release.git
+- rosdistro version: `3.3.2-1`
+- old version: `3.3.2-1`
+- new version: `3.3.3-1`
+
+Versions of tools used:
+
+- bloom version: `0.8.0`
+- catkin_pkg version: `0.4.13`
+- rosdep version: `0.15.2`
+- rosdistro version: `0.7.4`
+- vcstools version: `0.1.42`
+
+
 ## gazebo_ros_pkgs (dashing) - 3.3.2-1
 
 The packages in the `gazebo_ros_pkgs` repository were released into the `dashing` distro by running `/usr/bin/bloom-release --rosdistro dashing --track dashing gazebo_ros_pkgs --edit` on `Thu, 01 Aug 2019 03:43:38 -0000`
