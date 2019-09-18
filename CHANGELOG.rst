@@ -2,6 +2,9 @@
 Changelog for package gazebo_dev
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.3.4 (2019-09-18)
+------------------
+
 3.3.3 (2019-08-23)
 ------------------
 * Add maintainer (`#985 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/985>`_)
