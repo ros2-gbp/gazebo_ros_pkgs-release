@@ -1,3 +1,31 @@
+## gazebo_ros_pkgs (eloquent) - 3.4.0-1
+
+The packages in the `gazebo_ros_pkgs` repository were released into the `eloquent` distro by running `/usr/bin/bloom-release gazebo_ros_pkgs --track eloquent --ros-distro eloquent` on `Thu, 03 Oct 2019 18:53:04 -0000`
+
+These packages were released:
+- `gazebo_dev`
+- `gazebo_msgs`
+- `gazebo_plugins`
+- `gazebo_ros`
+- `gazebo_ros_pkgs`
+
+Version of package(s) in repository `gazebo_ros_pkgs`:
+
+- upstream repository: https://github.com/ros-simulation/gazebo_ros_pkgs
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `3.4.0-1`
+
+Versions of tools used:
+
+- bloom version: `0.8.0`
+- catkin_pkg version: `0.4.13`
+- rosdep version: `0.16.1`
+- rosdistro version: `0.7.4`
+- vcstools version: `0.1.42`
+
+
 ## gazebo_ros_pkgs (dashing) - 3.3.4-1
 
 The packages in the `gazebo_ros_pkgs` repository were released into the `dashing` distro by running `/usr/bin/bloom-release --rosdistro dashing --track dashing gazebo_ros_pkgs` on `Wed, 18 Sep 2019 22:29:33 -0000`
