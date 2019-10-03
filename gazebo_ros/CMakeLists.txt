@@ -83,20 +83,6 @@ target_link_libraries(gazebo_ros_factory
 )
 ament_export_libraries(gazebo_ros_factory)
 
-# gazebo_ros_properties
-add_library(gazebo_ros_properties SHARED
-  src/gazebo_ros_properties.cpp
-)
-ament_target_dependencies(gazebo_ros_properties
-  "rclcpp"
-  "gazebo_dev"
-  "gazebo_msgs"
-)
-target_link_libraries(gazebo_ros_properties
-  gazebo_ros_node
-)
-ament_export_libraries(gazebo_ros_properties)
-
 # gazebo_ros_state
 add_library(gazebo_ros_state SHARED
   src/gazebo_ros_state.cpp
@@ -110,6 +96,20 @@ target_link_libraries(gazebo_ros_state
   gazebo_ros_node
 )
 ament_export_libraries(gazebo_ros_state)
+
+# gazebo_ros_force_system
+add_library(gazebo_ros_force_system SHARED
+  src/gazebo_ros_force_system.cpp
+)
+ament_target_dependencies(gazebo_ros_force_system
+  "rclcpp"
+  "gazebo_dev"
+  "gazebo_msgs"
+)
+target_link_libraries(gazebo_ros_force_system
+  gazebo_ros_node
+)
+ament_export_libraries(gazebo_ros_force_system)
 
 ament_export_include_directories(include)
 ament_export_dependencies(rclcpp)
@@ -135,9 +135,9 @@ install(
 install(
   TARGETS
     gazebo_ros_factory
+    gazebo_ros_force_system
     gazebo_ros_init
     gazebo_ros_node
-    gazebo_ros_properties
     gazebo_ros_state
     gazebo_ros_utils
   ARCHIVE DESTINATION lib

@@ -36,16 +36,16 @@
                 <mu2>50</mu2>
               </ode>
             </friction>
-            <bounce>
-              <restitution_coefficient>1.0</restitution_coefficient>
-              <threshold>0</threshold>
-            </bounce>
-            <contact>
-              <ode>
-                <max_vel>10000</max_vel>
-                <min_depth>0.001</min_depth>
-              </ode>
-            </contact>
+              <bounce>
+                <restitution_coefficient>1.0</restitution_coefficient>
+                <threshold>0</threshold>
+              </bounce>
+              <contact>
+                <ode>
+                  <max_vel>10000</max_vel>
+                  <min_depth>0.001</min_depth>
+                </ode>
+              </contact>
           </surface>
         </collision>
         <visual name="visual">
@@ -174,9 +174,6 @@
             <camera_name>mycamera</camera_name>
 
             <!-- frame_name>omit so it defaults to link name</frame_name-->
-
-            <!-- Specify if triggered camera -->
-            <triggered>false</triggered>
           </plugin>
         </sensor>
       </link>
