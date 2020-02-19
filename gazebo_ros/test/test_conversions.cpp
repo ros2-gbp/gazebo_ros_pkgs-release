@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <gtest/gtest.h>
+
 #include <gazebo_ros/conversions/builtin_interfaces.hpp>
 #include <gazebo_ros/conversions/geometry_msgs.hpp>
-#include <gtest/gtest.h>
 
 TEST(TestConversions, Vector3)
 {
@@ -60,6 +61,16 @@ TEST(TestConversions, Pose)
   EXPECT_EQ(0.0, pose_msg.orientation.x);
   EXPECT_EQ(0.3, pose_msg.orientation.y);
   EXPECT_EQ(-0.1, pose_msg.orientation.z);
+
+  // ROS Pose to Ign
+  auto pose_ign = gazebo_ros::Convert<ignition::math::Pose3d>(pose_msg);
+  EXPECT_EQ(0.6, pose_ign.Pos().X());
+  EXPECT_EQ(0.5, pose_ign.Pos().Y());
+  EXPECT_EQ(0.7, pose_ign.Pos().Z());
+  EXPECT_EQ(0.9, pose_ign.Rot().W());
+  EXPECT_EQ(0.0, pose_ign.Rot().X());
+  EXPECT_EQ(0.3, pose_ign.Rot().Y());
+  EXPECT_EQ(-0.1, pose_ign.Rot().Z());
 
   // ROS Pose to ROS Transform
   auto transform_msg = gazebo_ros::Convert<geometry_msgs::msg::Transform>(pose_msg);
