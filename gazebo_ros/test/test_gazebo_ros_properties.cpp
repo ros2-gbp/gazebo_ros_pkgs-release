@@ -166,7 +166,8 @@ void GazeboRosPropertiesTest::GetModelProperties(
   request->model_name = _model_name;
 
   auto response_future = get_model_properties_client_->async_send_request(request);
-  EXPECT_EQ(rclcpp::executor::FutureReturnCode::SUCCESS,
+  EXPECT_EQ(
+    rclcpp::executor::FutureReturnCode::SUCCESS,
     rclcpp::spin_until_future_complete(node_, response_future));
 
   auto response = response_future.get();
@@ -213,7 +214,8 @@ void GazeboRosPropertiesTest::GetJointProperties(
   request->joint_name = _joint_name;
 
   auto response_future = get_joint_properties_client_->async_send_request(request);
-  EXPECT_EQ(rclcpp::executor::FutureReturnCode::SUCCESS,
+  EXPECT_EQ(
+    rclcpp::executor::FutureReturnCode::SUCCESS,
     rclcpp::spin_until_future_complete(node_, response_future));
 
   auto response = response_future.get();
@@ -247,7 +249,8 @@ void GazeboRosPropertiesTest::SetJointProperties(
   request->ode_joint_config.damping.push_back(_damping);
 
   auto response_future = set_joint_properties_client_->async_send_request(request);
-  EXPECT_EQ(rclcpp::executor::FutureReturnCode::SUCCESS,
+  EXPECT_EQ(
+    rclcpp::executor::FutureReturnCode::SUCCESS,
     rclcpp::spin_until_future_complete(node_, response_future));
 
   auto response = response_future.get();
@@ -270,7 +273,8 @@ void GazeboRosPropertiesTest::GetLinkProperties(
   request->link_name = _link_name;
 
   auto response_future = get_link_properties_client_->async_send_request(request);
-  EXPECT_EQ(rclcpp::executor::FutureReturnCode::SUCCESS,
+  EXPECT_EQ(
+    rclcpp::executor::FutureReturnCode::SUCCESS,
     rclcpp::spin_until_future_complete(node_, response_future));
 
   auto response = response_future.get();
@@ -310,7 +314,8 @@ void GazeboRosPropertiesTest::SetLinkProperties(
   request->izz = _izz;
 
   auto response_future = set_link_properties_client_->async_send_request(request);
-  EXPECT_EQ(rclcpp::executor::FutureReturnCode::SUCCESS,
+  EXPECT_EQ(
+    rclcpp::executor::FutureReturnCode::SUCCESS,
     rclcpp::spin_until_future_complete(node_, response_future));
 
   auto response = response_future.get();
@@ -329,7 +334,8 @@ void GazeboRosPropertiesTest::GetLightProperties(
   request->light_name = _light_name;
 
   auto response_future = get_light_properties_client_->async_send_request(request);
-  EXPECT_EQ(rclcpp::executor::FutureReturnCode::SUCCESS,
+  EXPECT_EQ(
+    rclcpp::executor::FutureReturnCode::SUCCESS,
     rclcpp::spin_until_future_complete(node_, response_future));
 
   auto response = response_future.get();
@@ -364,7 +370,8 @@ void GazeboRosPropertiesTest::SetLightProperties(
   request->attenuation_quadratic = _attenuation_quadratic;
 
   auto response_future = set_light_properties_client_->async_send_request(request);
-  EXPECT_EQ(rclcpp::executor::FutureReturnCode::SUCCESS,
+  EXPECT_EQ(
+    rclcpp::executor::FutureReturnCode::SUCCESS,
     rclcpp::spin_until_future_complete(node_, response_future));
 
   auto response = response_future.get();
@@ -394,30 +401,36 @@ TEST_F(GazeboRosPropertiesTest, GetSetProperties)
   // Get / set link properties
   {
     // Get initial link properties
-    this->GetLinkProperties("simple_arm::arm_base",
+    this->GetLinkProperties(
+      "simple_arm::arm_base",
       true, 101.0, 1.11, 0.0, 0.0, 100.11, 0.0, 1.01);
 
     // Set link properties
-    this->SetLinkProperties("simple_arm::arm_base",
+    this->SetLinkProperties(
+      "simple_arm::arm_base",
       true, 170.2, 1.2, 0.3, 0.2, 102.2, 0.2, 1.02);
 
     // Check new link properties
-    this->GetLinkProperties("simple_arm::arm_base",
+    this->GetLinkProperties(
+      "simple_arm::arm_base",
       true, 170.2, 1.2, 0.3, 0.2, 102.2, 0.2, 1.02);
   }
   // Get / set light properties
   {
     // Get initial light properties
-    this->GetLightProperties("sun", ignition::math::Color(0.8, 0.8, 0.8, 1.0),
+    this->GetLightProperties(
+      "sun", ignition::math::Color(0.8, 0.8, 0.8, 1.0),
       0.9, 0.01, 0.001);
 
     // Set light properties
-    this->SetLightProperties("sun", ignition::math::Color(0.7, 0.1, 0.5, 1.0),
+    this->SetLightProperties(
+      "sun", ignition::math::Color(0.7, 0.1, 0.5, 1.0),
       0.92, 0.0092, 0.002);
 
     // Check new light properties. Wait for properties to be set first.
     rclcpp::sleep_for(std::chrono::milliseconds(500));
-    this->GetLightProperties("sun", ignition::math::Color(0.7, 0.1, 0.5, 1.0),
+    this->GetLightProperties(
+      "sun", ignition::math::Color(0.7, 0.1, 0.5, 1.0),
       0.92, 0.0092, 0.002);
   }
 }

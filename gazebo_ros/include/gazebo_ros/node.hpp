@@ -18,6 +18,8 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include <gazebo_ros/executor.hpp>
+#include <gazebo_ros/node_visibility_control.h>
+#include <gazebo_ros/qos.hpp>
 
 #include <atomic>
 #include <memory>
@@ -33,7 +35,7 @@ namespace gazebo_ros
  * Wrapper around an rclcpp::Node which ensures all instances share an executor.
  * \include gazebo_ros/node.hpp
  */
-class Node : public rclcpp::Node
+class GAZEBO_ROS_NODE_PUBLIC Node : public rclcpp::Node
 {
 public:
   /// Shared pointer to a #gazebo_ros::Node
@@ -55,7 +57,7 @@ public:
    * \details This will create a new node; the node's name will be the same as the name argument
    * on the <plugin> tag.
    * \details This will call rclcpp::init if it hasn't been called yet.
-   * \details Sets node name, namespace, remappings, and parameters from SDF.
+   * \details Sets node name, namespace, remappings, parameters, and quality of service from SDF.
    * SDF is in the form:
    * \code{.xml}
    * <!-- Node name will be the same as the plugin name -->
@@ -72,6 +74,10 @@ public:
    *    <parameter name="publish_odom" type="bool">True</parameter>
    *    <!-- Remapping rules for node -->
    *    <remapping>my_topic:=new_topic</remapping>
+   *    <!-- QoS for node publishers and subscriptions -->
+   *    <qos>
+   *      <!-- See #gazebo_ros::QoS -->
+   *    </qos>
    *   </ros>
    * </plugin>
    * \endcode
@@ -108,6 +114,17 @@ public:
    */
   static rclcpp::Parameter sdf_to_ros_parameter(sdf::ElementPtr const & _sdf);
 
+  inline const gazebo_ros::QoS & get_qos() const &
+  {
+    return this->qos_;
+  }
+
+  // binds to everything else
+  inline gazebo_ros::QoS get_qos() &&
+  {
+    return this->qos_;
+  }
+
 private:
   /// Inherit constructor
   using rclcpp::Node::Node;
@@ -115,6 +132,9 @@ private:
   /// Points to #static_executor_, so that when all #gazebo_ros::Node instances are destroyed, the
   /// executor thread is too
   std::shared_ptr<Executor> executor_;
+
+  /// QoS for node entities
+  gazebo_ros::QoS qos_;
 
   /// Locks #initialized_ and #executor_
   static std::mutex lock_;

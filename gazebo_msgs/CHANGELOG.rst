@@ -2,6 +2,14 @@
 Changelog for package gazebo_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.5.0 (2020-06-19)
+------------------
+* Merge pull request `#1129 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1129>`_ from ros-simulation/e_to_f_june_2020
+  Eloquent ➡️ Foxy
+* Dashing -> Eloquent
+* 3.3.5
+* Contributors: Jose Luis Rivero, Louise Poubel
+
 3.4.4 (2020-05-08)
 ------------------
 
@@ -50,6 +58,9 @@ Changelog for package gazebo_msgs
   * [ros2] Port time commands (pause / reset) (`#866 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/866>`_)
   * relative -> reference
 * Contributors: Shivesh Khaitan, chapulina
+
+3.3.5 (2020-05-08)
+------------------
 
 3.3.4 (2019-09-18)
 ------------------

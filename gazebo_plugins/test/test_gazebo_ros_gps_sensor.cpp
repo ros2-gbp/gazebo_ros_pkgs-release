@@ -49,18 +49,18 @@ TEST_F(GazeboRosGpsSensorTest, GpsMessageCorrect)
   ASSERT_NE(nullptr, node);
 
   sensor_msgs::msg::NavSatFix::SharedPtr msg = nullptr;
-  auto sub =
-    node->create_subscription<sensor_msgs::msg::NavSatFix>("/gps/data", rclcpp::SensorDataQoS(),
-      [&msg](sensor_msgs::msg::NavSatFix::SharedPtr _msg) {
-        msg = _msg;
-      });
+  auto sub = node->create_subscription<sensor_msgs::msg::NavSatFix>(
+    "/gps/data", rclcpp::SensorDataQoS(),
+    [&msg](sensor_msgs::msg::NavSatFix::SharedPtr _msg) {
+      msg = _msg;
+    });
 
   world->Step(1);
   EXPECT_NEAR(0.0, box->WorldPose().Pos().X(), tol);
   EXPECT_NEAR(0.0, box->WorldPose().Pos().Y(), tol);
   EXPECT_NEAR(0.5, box->WorldPose().Pos().Z(), tol);
 
-  // Step until an gps message will have been published
+  // Step until a gps message will have been published
   int sleep{0};
   int max_sleep{1000};
   while (sleep < max_sleep && nullptr == msg) {
@@ -81,11 +81,18 @@ TEST_F(GazeboRosGpsSensorTest, GpsMessageCorrect)
   EXPECT_NEAR(0.5, pre_movement_msg->altitude, tol);
 
   // Change the position of the link and step a few times to wait the ros message to be received
+  msg = nullptr;
   ignition::math::Pose3d box_pose;
   box_pose.Pos() = {100.0, 200.0, 300.0};
   link->SetWorldPose(box_pose);
-  world->Step(50);
-  rclcpp::spin_some(node);
+
+  sleep = 0;
+  while (sleep < max_sleep && (nullptr == msg || msg->altitude < 150)) {
+    world->Step(50);
+    rclcpp::spin_some(node);
+    gazebo::common::Time::MSleep(100);
+    sleep++;
+  }
 
   // Check that GPS output reflects the position change
   auto post_movement_msg = std::make_shared<sensor_msgs::msg::NavSatFix>(*msg);

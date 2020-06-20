@@ -143,38 +143,45 @@ void GazeboRosProperties::Load(gazebo::physics::WorldPtr _world, sdf::ElementPtr
 
   impl_->get_model_properties_service_ =
     impl_->ros_node_->create_service<gazebo_msgs::srv::GetModelProperties>(
-    "get_model_properties", std::bind(&GazeboRosPropertiesPrivate::GetModelProperties, impl_.get(),
-    std::placeholders::_1, std::placeholders::_2));
+    "get_model_properties", std::bind(
+      &GazeboRosPropertiesPrivate::GetModelProperties, impl_.get(),
+      std::placeholders::_1, std::placeholders::_2));
 
   impl_->get_joint_properties_service_ =
     impl_->ros_node_->create_service<gazebo_msgs::srv::GetJointProperties>(
-    "get_joint_properties", std::bind(&GazeboRosPropertiesPrivate::GetJointProperties, impl_.get(),
-    std::placeholders::_1, std::placeholders::_2));
+    "get_joint_properties", std::bind(
+      &GazeboRosPropertiesPrivate::GetJointProperties, impl_.get(),
+      std::placeholders::_1, std::placeholders::_2));
 
   impl_->get_link_properties_service_ =
     impl_->ros_node_->create_service<gazebo_msgs::srv::GetLinkProperties>(
-    "get_link_properties", std::bind(&GazeboRosPropertiesPrivate::GetLinkProperties, impl_.get(),
-    std::placeholders::_1, std::placeholders::_2));
+    "get_link_properties", std::bind(
+      &GazeboRosPropertiesPrivate::GetLinkProperties, impl_.get(),
+      std::placeholders::_1, std::placeholders::_2));
 
   impl_->get_light_properties_service_ =
     impl_->ros_node_->create_service<gazebo_msgs::srv::GetLightProperties>(
-    "get_light_properties", std::bind(&GazeboRosPropertiesPrivate::GetLightProperties, impl_.get(),
-    std::placeholders::_1, std::placeholders::_2));
+    "get_light_properties", std::bind(
+      &GazeboRosPropertiesPrivate::GetLightProperties, impl_.get(),
+      std::placeholders::_1, std::placeholders::_2));
 
   impl_->set_joint_properties_service_ =
     impl_->ros_node_->create_service<gazebo_msgs::srv::SetJointProperties>(
-    "set_joint_properties", std::bind(&GazeboRosPropertiesPrivate::SetJointProperties, impl_.get(),
-    std::placeholders::_1, std::placeholders::_2));
+    "set_joint_properties", std::bind(
+      &GazeboRosPropertiesPrivate::SetJointProperties, impl_.get(),
+      std::placeholders::_1, std::placeholders::_2));
 
   impl_->set_link_properties_service_ =
     impl_->ros_node_->create_service<gazebo_msgs::srv::SetLinkProperties>(
-    "set_link_properties", std::bind(&GazeboRosPropertiesPrivate::SetLinkProperties, impl_.get(),
-    std::placeholders::_1, std::placeholders::_2));
+    "set_link_properties", std::bind(
+      &GazeboRosPropertiesPrivate::SetLinkProperties, impl_.get(),
+      std::placeholders::_1, std::placeholders::_2));
 
   impl_->set_light_properties_service_ =
     impl_->ros_node_->create_service<gazebo_msgs::srv::SetLightProperties>(
-    "set_light_properties", std::bind(&GazeboRosPropertiesPrivate::SetLightProperties, impl_.get(),
-    std::placeholders::_1, std::placeholders::_2));
+    "set_light_properties", std::bind(
+      &GazeboRosPropertiesPrivate::SetLightProperties, impl_.get(),
+      std::placeholders::_1, std::placeholders::_2));
 
   // Gazebo transport
   impl_->gz_node_ = gazebo::transport::NodePtr(new gazebo::transport::Node());

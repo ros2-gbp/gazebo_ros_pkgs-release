@@ -139,16 +139,22 @@ void GazeboRosFactoryPrivate::OnWorldCreated(const std::string & _world_name)
   // ROS transport
   ros_node_ = gazebo_ros::Node::Get();
 
-  model_list_service_ = ros_node_->create_service<gazebo_msgs::srv::GetModelList>("get_model_list",
-      std::bind(&GazeboRosFactoryPrivate::GetModelList, this,
+  model_list_service_ = ros_node_->create_service<gazebo_msgs::srv::GetModelList>(
+    "get_model_list",
+    std::bind(
+      &GazeboRosFactoryPrivate::GetModelList, this,
       std::placeholders::_1, std::placeholders::_2));
 
-  spawn_service_ = ros_node_->create_service<gazebo_msgs::srv::SpawnEntity>("spawn_entity",
-      std::bind(&GazeboRosFactoryPrivate::SpawnEntity, this,
+  spawn_service_ = ros_node_->create_service<gazebo_msgs::srv::SpawnEntity>(
+    "spawn_entity",
+    std::bind(
+      &GazeboRosFactoryPrivate::SpawnEntity, this,
       std::placeholders::_1, std::placeholders::_2));
 
-  delete_service_ = ros_node_->create_service<gazebo_msgs::srv::DeleteEntity>("delete_entity",
-      std::bind(&GazeboRosFactoryPrivate::DeleteEntity, this,
+  delete_service_ = ros_node_->create_service<gazebo_msgs::srv::DeleteEntity>(
+    "delete_entity",
+    std::bind(
+      &GazeboRosFactoryPrivate::DeleteEntity, this,
       std::placeholders::_1, std::placeholders::_2));
 
   // Gazebo transport
@@ -235,7 +241,8 @@ void GazeboRosFactoryPrivate::SpawnEntity(
     if (req->reference_frame == "" || req->reference_frame == "world" ||
       req->reference_frame == "map" || req->reference_frame == "/map")
     {
-      RCLCPP_DEBUG(ros_node_->get_logger(),
+      RCLCPP_DEBUG(
+        ros_node_->get_logger(),
         "SpawnEntity: reference_frame is empty/world/map, using inertial frame");
     } else {
       res->success = false;
