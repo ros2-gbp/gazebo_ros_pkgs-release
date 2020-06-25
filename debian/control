@@ -1,0 +1,12 @@
+Source: ros-foxy-gazebo-plugins
+Section: misc
+Priority: optional
+Maintainer: Jose Luis Rivero <jrivero@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-foxy-ament-cmake, ros-foxy-ament-cmake-gtest, ros-foxy-ament-lint-auto, ros-foxy-ament-lint-common, ros-foxy-camera-info-manager, ros-foxy-cv-bridge, ros-foxy-gazebo-dev, ros-foxy-gazebo-msgs, ros-foxy-gazebo-ros, ros-foxy-geometry-msgs, ros-foxy-image-transport, ros-foxy-nav-msgs, ros-foxy-rclcpp, ros-foxy-sensor-msgs, ros-foxy-std-msgs, ros-foxy-std-srvs, ros-foxy-tf2-geometry-msgs, ros-foxy-tf2-ros, ros-foxy-trajectory-msgs, ros-foxy-ros-workspace
+Homepage: http://gazebosim.org/tutorials?cat=connect_ros
+Standards-Version: 3.9.2
+
+Package: ros-foxy-gazebo-plugins
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-foxy-camera-info-manager, ros-foxy-cv-bridge, ros-foxy-gazebo-dev, ros-foxy-gazebo-msgs, ros-foxy-gazebo-ros, ros-foxy-geometry-msgs, ros-foxy-image-transport, ros-foxy-nav-msgs, ros-foxy-rclcpp, ros-foxy-sensor-msgs, ros-foxy-std-msgs, ros-foxy-std-srvs, ros-foxy-tf2-geometry-msgs, ros-foxy-tf2-ros, ros-foxy-trajectory-msgs, ros-foxy-ros-workspace
+Description: Robot-independent Gazebo plugins for sensors, motors and dynamic reconfigurable components.
