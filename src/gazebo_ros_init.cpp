@@ -15,8 +15,13 @@
 #include "gazebo_ros/gazebo_ros_init.hpp"
 
 #include <gazebo/common/Plugin.hh>
+#include <gazebo/msgs/MessageTypes.hh>
 #include <gazebo/physics/PhysicsIface.hh>
 #include <gazebo/physics/World.hh>
+#include <gazebo/transport/Node.hh>
+
+#include <gazebo_msgs/msg/performance_metrics.hpp>
+#include <gazebo_msgs/msg/sensor_performance_metric.hpp>
 
 #include <gazebo_ros/conversions/builtin_interfaces.hpp>
 #include <gazebo_ros/node.hpp>
@@ -27,6 +32,14 @@
 
 #include <memory>
 #include <string>
+
+#ifndef GAZEBO_ROS_HAS_PERFORMANCE_METRICS
+#if \
+  (GAZEBO_MAJOR_VERSION == 11 && GAZEBO_MINOR_VERSION > 1) || \
+  (GAZEBO_MAJOR_VERSION == 9 && GAZEBO_MINOR_VERSION > 14)
+#define GAZEBO_ROS_HAS_PERFORMANCE_METRICS
+#endif
+#endif  // ifndef GAZEBO_ROS_HAS_PERFORMANCE_METRICS
 
 namespace gazebo_ros
 {
@@ -73,6 +86,12 @@ public:
     std_srvs::srv::Empty::Request::SharedPtr req,
     std_srvs::srv::Empty::Response::SharedPtr res);
 
+#ifdef GAZEBO_ROS_HAS_PERFORMANCE_METRICS
+  /// \brief Subscriber callback for performance metrics. This will be send in the ROS network
+  /// \param[in] msg Received PerformanceMetrics message
+  void onPerformanceMetrics(ConstPerformanceMetricsPtr & msg);
+#endif
+
   /// \brief Keep a pointer to the world.
   gazebo::physics::WorldPtr world_;
 
@@ -94,6 +113,9 @@ public:
   /// ROS service to handle requests to unpause physics.
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr unpause_service_;
 
+  /// \brief ROS publisher to publish performance metrics.
+  rclcpp::Publisher<gazebo_msgs::msg::PerformanceMetrics>::SharedPtr performance_metrics_pub_;
+
   /// Connection to world update event, called at every iteration
   gazebo::event::ConnectionPtr world_update_event_;
 
@@ -102,6 +124,12 @@ public:
 
   /// Throttler for clock publisher.
   gazebo_ros::Throttler throttler_;
+
+  /// Gazebo subscriber to receive the performance metrics message.
+  gazebo::transport::SubscriberPtr performance_metric_sub_;
+
+  /// Gazebo node for communication.
+  gazebo::transport::NodePtr gz_node_;
 
   /// Default frequency for clock publisher.
   static constexpr double DEFAULT_PUBLISH_FREQUENCY = 10.;
@@ -136,6 +164,12 @@ void GazeboRosInit::Load(int argc, char ** argv)
     "/clock",
     rclcpp::QoS(rclcpp::KeepLast(10)).transient_local());
 
+#ifdef GAZEBO_ROS_HAS_PERFORMANCE_METRICS
+  impl_->performance_metrics_pub_ =
+    impl_->ros_node_->create_publisher<gazebo_msgs::msg::PerformanceMetrics>(
+    "performance_metrics", 10);
+#endif
+
   // Publish rate parameter
   auto rate_param = impl_->ros_node_->declare_parameter(
     "publish_rate",
@@ -149,6 +183,32 @@ void GazeboRosInit::Load(int argc, char ** argv)
   impl_->world_created_event_ = gazebo::event::Events::ConnectWorldCreated(
     std::bind(&GazeboRosInitPrivate::OnWorldCreated, impl_.get(), std::placeholders::_1));
 }
+
+#ifdef GAZEBO_ROS_HAS_PERFORMANCE_METRICS
+void GazeboRosInitPrivate::onPerformanceMetrics(
+  ConstPerformanceMetricsPtr & msg)
+{
+  gazebo_msgs::msg::PerformanceMetrics msg_ros;
+  msg_ros.header.stamp = Convert<builtin_interfaces::msg::Time>(world_->SimTime());
+  msg_ros.real_time_factor = msg->real_time_factor();
+  for (auto sensor : msg->sensor()) {
+    gazebo_msgs::msg::SensorPerformanceMetric sensor_msgs;
+    sensor_msgs.sim_update_rate = sensor.sim_update_rate();
+    sensor_msgs.real_update_rate = sensor.real_update_rate();
+    sensor_msgs.name = sensor.name();
+
+    if (sensor.has_fps()) {
+      sensor_msgs.fps = sensor.fps();
+    } else {
+      sensor_msgs.fps = -1;
+    }
+
+    msg_ros.sensors.push_back(sensor_msgs);
+  }
+
+  performance_metrics_pub_->publish(msg_ros);
+}
+#endif
 
 void GazeboRosInitPrivate::OnWorldCreated(const std::string & _world_name)
 {
@@ -182,6 +242,12 @@ void GazeboRosInitPrivate::OnWorldCreated(const std::string & _world_name)
     std::bind(
       &GazeboRosInitPrivate::OnUnpause, this,
       std::placeholders::_1, std::placeholders::_2));
+
+#ifdef GAZEBO_ROS_HAS_PERFORMANCE_METRICS
+  // Initialize gazebo transport node
+  gz_node_ = gazebo::transport::NodePtr(new gazebo::transport::Node());
+  gz_node_->Init(world_->Name());
+#endif
 }
 
 GazeboRosInitPrivate::GazeboRosInitPrivate()
@@ -198,6 +264,18 @@ void GazeboRosInitPrivate::PublishSimTime(const gazebo::common::UpdateInfo & _in
   rosgraph_msgs::msg::Clock clock;
   clock.clock = gazebo_ros::Convert<builtin_interfaces::msg::Time>(_info.simTime);
   clock_pub_->publish(clock);
+
+#ifdef GAZEBO_ROS_HAS_PERFORMANCE_METRICS
+  if (!performance_metric_sub_ && performance_metrics_pub_->get_subscription_count() > 0) {
+    // Subscribe to gazebo performance_metrics topic if there are ros subscribers
+    performance_metric_sub_ = gz_node_->Subscribe(
+      "/gazebo/performance_metrics",
+      &GazeboRosInitPrivate::onPerformanceMetrics, this);
+  } else if (performance_metric_sub_ && performance_metrics_pub_->get_subscription_count() == 0) {
+    // Unsubscribe from gazebo performance_metrics topic if there are no more ros subscribers
+    performance_metric_sub_.reset();
+  }
+#endif
 }
 
 void GazeboRosInitPrivate::OnResetSimulation(
