@@ -30,6 +30,10 @@
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/transform_listener.h>
 
+#ifdef IGN_PROFILER_ENABLE
+#include <ignition/common/Profiler.hh>
+#endif
+
 #include <string>
 #include <memory>
 
@@ -120,22 +124,38 @@ void GazeboRosP3D::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
   }
 
   impl_->pub_ = impl_->ros_node_->create_publisher<nav_msgs::msg::Odometry>(
-    impl_->topic_name_, qos.get_publisher_qos(impl_->topic_name_, rclcpp::SensorDataQoS()));
+    impl_->topic_name_, qos.get_publisher_qos(
+      impl_->topic_name_, rclcpp::SensorDataQoS().reliable()));
   impl_->topic_name_ = impl_->pub_->get_topic_name();
   RCLCPP_DEBUG(
     impl_->ros_node_->get_logger(), "Publishing on topic [%s]", impl_->topic_name_.c_str());
 
-  if (!sdf->HasElement("xyz_offsets")) {
-    RCLCPP_DEBUG(impl_->ros_node_->get_logger(), "Missing <xyz_offsets>, defaults to 0s");
-  } else {
+  if (sdf->HasElement("xyz_offsets")) {
+    RCLCPP_WARN(
+      impl_->ros_node_->get_logger(), "<xyz_offsets> is deprecated, use <xyz_offset> instead.");
     impl_->offset_.Pos() = sdf->GetElement("xyz_offsets")->Get<ignition::math::Vector3d>();
   }
-
-  if (!sdf->HasElement("rpy_offsets")) {
-    RCLCPP_DEBUG(impl_->ros_node_->get_logger(), "Missing <rpy_offsets>, defaults to 0s");
+  if (!sdf->HasElement("xyz_offset")) {
+    if (!sdf->HasElement("xyz_offsets")) {
+      RCLCPP_DEBUG(impl_->ros_node_->get_logger(), "Missing <xyz_offset>, defaults to 0s");
+    }
   } else {
+    impl_->offset_.Pos() = sdf->GetElement("xyz_offset")->Get<ignition::math::Vector3d>();
+  }
+
+  if (sdf->HasElement("rpy_offsets")) {
+    RCLCPP_WARN(
+      impl_->ros_node_->get_logger(), "<rpy_offsets> is deprecated, use <rpy_offset> instead.");
     impl_->offset_.Rot() = ignition::math::Quaterniond(
       sdf->GetElement("rpy_offsets")->Get<ignition::math::Vector3d>());
+  }
+  if (!sdf->HasElement("rpy_offset")) {
+    if (!sdf->HasElement("rpy_offsets")) {
+      RCLCPP_DEBUG(impl_->ros_node_->get_logger(), "Missing <rpy_offset>, defaults to 0s");
+    }
+  } else {
+    impl_->offset_.Rot() = ignition::math::Quaterniond(
+      sdf->GetElement("rpy_offset")->Get<ignition::math::Vector3d>());
   }
 
   if (!sdf->HasElement("gaussian_noise")) {
@@ -178,7 +198,9 @@ void GazeboRosP3DPrivate::OnUpdate(const gazebo::common::UpdateInfo & info)
   if (!link_) {
     return;
   }
-
+#ifdef IGN_PROFILER_ENABLE
+  IGN_PROFILE("GazeboRosP3DPrivate::OnUpdate");
+#endif
   gazebo::common::Time current_time = info.simTime;
 
   if (current_time < last_time_) {
@@ -203,7 +225,9 @@ void GazeboRosP3DPrivate::OnUpdate(const gazebo::common::UpdateInfo & info)
   if (tmp_dt == 0) {
     return;
   }
-
+#ifdef IGN_PROFILER_ENABLE
+  IGN_PROFILE_BEGIN("fill ROS message");
+#endif
   nav_msgs::msg::Odometry pose_msg;
 
   // Copy data into pose message
@@ -267,10 +291,15 @@ void GazeboRosP3DPrivate::OnUpdate(const gazebo::common::UpdateInfo & info)
   pose_msg.twist.covariance[21] = gn2;
   pose_msg.twist.covariance[28] = gn2;
   pose_msg.twist.covariance[35] = gn2;
-
+#ifdef IGN_PROFILER_ENABLE
+  IGN_PROFILE_END();
+  IGN_PROFILE_BEGIN("publish");
+#endif
   // Publish to ROS
   pub_->publish(pose_msg);
-
+#ifdef IGN_PROFILER_ENABLE
+  IGN_PROFILE_END();
+#endif
   // Save last time stamp
   last_time_ = current_time;
 }
