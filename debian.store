@@ -1,1 +1,1 @@
-{"trim": "", "base": "9f89c93", "trimbase": "", "parent": "debian/foxy/gazebo_ros_pkgs", "previous": "8f26285"}
+{"base": "03250bd", "parent": "debian/foxy/gazebo_ros_pkgs", "previous": "fd8e6d9", "trim": "", "trimbase": ""}
