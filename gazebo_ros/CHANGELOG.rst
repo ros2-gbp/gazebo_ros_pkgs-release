@@ -2,23 +2,11 @@
 Changelog for package gazebo_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.5.2 (2021-03-15)
+3.5.3 (2021-04-15)
 ------------------
-* Remove slash from gazebo_ros scripts Python package name (`#1251 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1251>`_)
-* Fix line length in gazebo_ros/test/CMakeLists.txt (`#1249 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1249>`_)
-* gazebo_ros: use lxml in spawn_entity.py (`#1221 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1221>`_)
-  The python xml.etree.ElementTree library does not handle xml namespaces well,
-  replacing namespaces of prefixed elements with ns0, ns1, etc. This switches
-  to using lxml instead, which has the same syntax and is already used by other
-  ros2 packages.  * Add a test
-* Fix tests for cyclonedds (`#1228 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1228>`_)
-  The default RMW implementation changed recently and some tests are now
-  failing. This fixes the tests.  * Use KeepLast(1) with transient_local in
-  tests There are some QoS incompatibilities in some tests that use
-  SystemDefaultsQoS, so this changes them to use KeepLast(1) with
-  transient_local instead. This fixes some of the test failures but not all.
-  * test_sim_time: allow more startup messages
-  * Fix QoS and initialization of joint state pub test
+* Update default spawn_service_timeout to be consistent with other ROS2 distros (`#1264 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1264>`_)
+  * update default timeout value to be consistent with other ROS2 distros
+  * define timeout as a constant
 * Fix executor to avoid random exceptions when shutting down (`#1212 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1212>`_)
   * Fix executor to avoid random exceptions when shutting down
   * Add link to related issue in rclcpp
@@ -35,10 +23,6 @@ Changelog for package gazebo_ros
   `osrf/gazebo#2902 <https://github.com/osrf/gazebo/issues/2902>`_.
   This also adds a macro to reduce duplication of the version checking
   logic.
-* Contributors: Ivan Santiago Paunovic, Michel Hidalgo, Steve Peters
-
-3.5.1 (2020-11-25)
-------------------
 * colcon.pkg: build gazebo first in colcon workspace (`#1192 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1192>`_)
   Add a colcon.pkg file to gazebo_dev with gazebo's cmake project
   name "Gazebo" listed as a dependency to support building
@@ -46,19 +30,12 @@ Changelog for package gazebo_ros
   * Add colcon.pkg files for other packages
   Copy colcon.pkg to gazebo_ros, gazebo_plugins, and
   gazebo_ros_control so that --merge-install won't be required.
-  Signed-off-by: Steve Peters <scpeters@openrobotics.org>
-* Fixed Parameterized testing on Rolling (`#1184 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1184>`_)
-  Signed-off-by: ahcorde <ahcorde@gmail.com>
 * [ROS 2] Bridge to republish PerformanceMetrics in ROS 2 (`#1147 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1147>`_)
-  Signed-off-by: ahcorde <ahcorde@gmail.com>
 * [Windows] Add missing visibility control. (`#1150 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1150>`_)
 * [ros2] Enable the force system on launch files (`#1035 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1035>`_)
-  Signed-off-by: Louise Poubel <louise@openrobotics.org>
 * make compile wo/ warnings on osx (`#1149 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1149>`_)
-  Signed-off-by: Karsten Knese <Karsten1987@users.noreply.github.com>
 * Added lockstep argument to gzserver (`#1146 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1146>`_)
-  Signed-off-by: ahcorde <ahcorde@gmail.com>
-* Contributors: Alejandro Hernández Cordero, Karsten Knese, Louise Poubel, Sean Yen, Steve Peters
+* Contributors: Alejandro Hernández Cordero, Ivan Santiago Paunovic, Karsten Knese, Louise Poubel, M. Mei, Sean Yen, Steve Peters
 
 3.5.0 (2020-06-19)
 ------------------

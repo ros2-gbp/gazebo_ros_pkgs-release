@@ -69,9 +69,9 @@ TEST_F(TestSimTime, TestClock)
     });
 
   unsigned int sleep{0};
-  unsigned int max_sleep{100};
+  unsigned int max_sleep{30};
   while (msgs.size() < 5 && sleep++ < max_sleep) {
-    executor.spin_once(100ms);
+    executor.spin_once(200ms);
   }
   EXPECT_LT(sleep, max_sleep);
   EXPECT_EQ(5u, msgs.size());

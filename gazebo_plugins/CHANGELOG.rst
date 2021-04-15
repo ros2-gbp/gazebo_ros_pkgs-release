@@ -2,21 +2,8 @@
 Changelog for package gazebo_plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.5.2 (2021-03-15)
+3.5.3 (2021-04-15)
 ------------------
-* gazebo_ros_camera: Added accessor methods for camera properties (`#1246 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1246>`_)
-  * Added accessor methods to gazebo_ros_camera for subclass access to camera properties.
-  * Removed ros node accessor; no longer needed
-  * Removed const return types and added vector include to header
-  Co-authored-by: kbjeppes <kaden.b.jeppesen@nasa.gov>
-* Fix tests for cyclonedds (`#1228
-  <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1228>`_) The
-  default RMW implementation changed recently and some tests are now failing.
-  This fixes the tests.  * Use KeepLast(1) with transient_local in tests There
-  are some QoS incompatibilities in some tests that use SystemDefaultsQoS, so
-  this changes them to use KeepLast(1) with transient_local instead. This fixes
-  some of the test failures but not all.  * test_sim_time: allow more startup
-  messages * Fix QoS and initialization of joint state pub test
 * Make p3d offset element names singular (`#1210 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1210>`_)
   * Make p3d offset element names singular
   - <xyz_offsets> is renamed to <xyz_offset>
@@ -24,10 +11,6 @@ Changelog for package gazebo_plugins
   The old names can still be used, but are deprecated.
   This is more consistent with the naming convention used in ROS 1 versions.
   * Add test for deprecated functionality
-* Contributors: Jacob Perron, Steve Peters, kjeppesen1
-
-3.5.1 (2020-11-25)
-------------------
 * colcon.pkg: build gazebo first in colcon workspace (`#1192 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1192>`_)
   Add a colcon.pkg file to gazebo_dev with gazebo's cmake project
   name "Gazebo" listed as a dependency to support building
@@ -35,16 +18,14 @@ Changelog for package gazebo_plugins
   * Add colcon.pkg files for other packages
   Copy colcon.pkg to gazebo_ros, gazebo_plugins, and
   gazebo_ros_control so that --merge-install won't be required.
-  Signed-off-by: Steve Peters <scpeters@openrobotics.org>
-* Fixed Parameterized testing on Rolling (`#1184 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1184>`_)
-  Signed-off-by: ahcorde <ahcorde@gmail.com>
+* publish with QoS reliable as default (`#1224 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1224>`_)
+  * default to reliable publishers
 * adding buffer to gzebo ros hand of god plugin (`#1179 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1179>`_)
   Fixes `#1178 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1178>`_.
 * [gazebo_plugins] address warnings (`#1151 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1151>`_)
   * use .c_str() for variadic template
   * silence warnings
-  Signed-off-by: Karsten Knese <Karsten1987@users.noreply.github.com>
-  Signed-off-by: Steve Peters <scpeters@openrobotics.org>
+  Co-authored-by: Steve Peters <scpeters@openrobotics.org>
 * Port wheel slip plugin to ros2 (forward port from eloquent) (`#1148 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1148>`_)
   Forward port of wheel slip plugin from eloquent (`#1099 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1099>`_)
   to foxy.
@@ -55,10 +36,13 @@ Changelog for package gazebo_plugins
   default slip parameter values are set to -1, so that the SDF/URDF
   values are still preferred unless a different parameter value
   is specified in a launch file.
-  Signed-off-by: Steve Peters <scpeters@openrobotics.org>
+  Co-authored-by: Jacob Perron <jacob@openrobotics.org>
 * Added ignition common profiler to ros2 (`#1141 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1141>`_)
-  Signed-off-by: ahcorde <ahcorde@gmail.com>
-* Contributors: Alejandro Hernández Cordero, Karsten Knese, Steve Macenski, Steve Peters
+  * Added ignition common profiler to ros2
+  * Make linters happy
+  * minor fixes
+  * Removed warning: handler for the param change callback
+* Contributors: Alejandro Hernández Cordero, Brett Downing, Jacob Perron, Karsten Knese, Steve Macenski, Steve Peters
 
 3.5.0 (2020-06-19)
 ------------------

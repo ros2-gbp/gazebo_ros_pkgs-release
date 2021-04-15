@@ -2,10 +2,7 @@
 Changelog for package gazebo_dev
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.5.2 (2021-03-15)
-------------------
-
-3.5.1 (2020-11-25)
+3.5.3 (2021-04-15)
 ------------------
 * colcon.pkg: build gazebo first in colcon workspace (`#1192 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1192>`_)
   Add a colcon.pkg file to gazebo_dev with gazebo's cmake project
@@ -14,7 +11,6 @@ Changelog for package gazebo_dev
   * Add colcon.pkg files for other packages
   Copy colcon.pkg to gazebo_ros, gazebo_plugins, and
   gazebo_ros_control so that --merge-install won't be required.
-  Signed-off-by: Steve Peters <scpeters@openrobotics.org>
 * Contributors: Steve Peters
 
 3.5.0 (2020-06-19)

@@ -40,10 +40,6 @@ int main(int argc, char * argv[])
     "</geometry>"
     "</visual>"
     "</link>"
-    "<plugin name='test_xmlns' filename='not-found'"
-    "        xmlns:test='http://example.org/schema'>"
-    "<test:parameter>content</test:parameter>"
-    "</plugin>"
     "</model>"
     "</sdf>";
 
