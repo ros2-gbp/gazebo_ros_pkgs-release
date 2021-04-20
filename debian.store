@@ -1,1 +1,1 @@
-{"base": "57d1410", "parent": "debian/rolling/gazebo_msgs", "previous": "3ef6873", "trim": "", "trimbase": ""}
+{"base": "d3775ad", "parent": "debian/galactic/gazebo_msgs", "previous": "ad8519c", "trim": "", "trimbase": ""}
