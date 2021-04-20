@@ -1,0 +1,12 @@
+Source: ros-galactic-gazebo-ros-pkgs
+Section: misc
+Priority: optional
+Maintainer: Jose Luis Rivero <jrivero@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-galactic-ament-cmake, ros-galactic-ros-workspace
+Homepage: http://gazebosim.org/tutorials?cat=connect_ros
+Standards-Version: 3.9.2
+
+Package: ros-galactic-gazebo-ros-pkgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-galactic-gazebo-dev, ros-galactic-gazebo-msgs, ros-galactic-gazebo-plugins, ros-galactic-gazebo-ros, ros-galactic-ros-workspace
+Description: Interface for using ROS with the Gazebo simulator.
