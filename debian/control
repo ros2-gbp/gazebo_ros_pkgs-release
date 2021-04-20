@@ -1,0 +1,12 @@
+Source: ros-galactic-gazebo-ros
+Section: misc
+Priority: optional
+Maintainer: Jose Luis Rivero <jrivero@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-galactic-ament-cmake, ros-galactic-ament-cmake-gtest, ros-galactic-ament-lint-auto, ros-galactic-ament-lint-common, ros-galactic-builtin-interfaces, ros-galactic-gazebo-dev, ros-galactic-gazebo-msgs, ros-galactic-geometry-msgs, ros-galactic-launch-testing-ament-cmake, ros-galactic-rcl, ros-galactic-rclcpp, ros-galactic-rclpy, ros-galactic-rmw, ros-galactic-ros2run, ros-galactic-sensor-msgs, ros-galactic-std-msgs, ros-galactic-std-srvs, ros-galactic-tinyxml-vendor, ros-galactic-ros-workspace
+Homepage: http://gazebosim.org/tutorials?cat=connect_ros
+Standards-Version: 3.9.2
+
+Package: ros-galactic-gazebo-ros
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-lxml, ros-galactic-builtin-interfaces, ros-galactic-gazebo-dev, ros-galactic-gazebo-msgs, ros-galactic-geometry-msgs, ros-galactic-launch-ros, ros-galactic-rcl, ros-galactic-rclcpp, ros-galactic-rclpy, ros-galactic-rmw, ros-galactic-sensor-msgs, ros-galactic-std-srvs, ros-galactic-tinyxml-vendor, ros-galactic-ros-workspace
+Description: Utilities to interface with Gazebo through ROS.
