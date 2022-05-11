@@ -26,7 +26,7 @@
 #undef NO_ERROR
 #endif
 
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/transform_listener.h>
 
@@ -124,7 +124,8 @@ void GazeboRosP3D::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
   }
 
   impl_->pub_ = impl_->ros_node_->create_publisher<nav_msgs::msg::Odometry>(
-    impl_->topic_name_, qos.get_publisher_qos(impl_->topic_name_, rclcpp::SensorDataQoS()));
+    impl_->topic_name_, qos.get_publisher_qos(
+      impl_->topic_name_, rclcpp::SensorDataQoS().reliable()));
   impl_->topic_name_ = impl_->pub_->get_topic_name();
   RCLCPP_DEBUG(
     impl_->ros_node_->get_logger(), "Publishing on topic [%s]", impl_->topic_name_.c_str());
