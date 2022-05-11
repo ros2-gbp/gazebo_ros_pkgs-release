@@ -1,3 +1,31 @@
+## gazebo_ros_pkgs (humble) - 3.6.0-1
+
+The packages in the `gazebo_ros_pkgs` repository were released into the `humble` distro by running `/usr/bin/bloom-release --track humble --rosdistro humble gazebo_ros_pkgs` on `Wed, 11 May 2022 18:41:07 -0000`
+
+These packages were released:
+- `gazebo_dev`
+- `gazebo_msgs`
+- `gazebo_plugins`
+- `gazebo_ros`
+- `gazebo_ros_pkgs`
+
+Version of package(s) in repository `gazebo_ros_pkgs`:
+
+- upstream repository: https://github.com/ros-simulation/gazebo_ros_pkgs
+- release repository: https://github.com/ros2-gbp/gazebo_ros_pkgs-release.git
+- rosdistro version: `null`
+- old version: `null`
+- new version: `3.6.0-1`
+
+Versions of tools used:
+
+- bloom version: `0.11.1`
+- catkin_pkg version: `0.4.24`
+- rosdep version: `0.21.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## gazebo_ros_pkgs (rolling) - 3.6.0-1
 
 The packages in the `gazebo_ros_pkgs` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --track rolling --rosdistro rolling gazebo_ros_pkgs` on `Wed, 11 May 2022 17:20:14 -0000`
