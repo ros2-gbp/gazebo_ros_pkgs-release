@@ -8,7 +8,7 @@ endif()
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   # we dont use add_compile_options with pedantic in message packages
   # because the Python C extensions dont comply with it
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Wno-inconsistent-missing-override")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
 endif()
 
 if(WIN32)
@@ -455,6 +455,7 @@ if(NOT GAZEBO_VERSION VERSION_LESS 9.5)
   )
   ament_target_dependencies(gazebo_ros_wheel_slip
     "gazebo_dev"
+    "gazebo_msgs"
     "gazebo_ros"
     "rclcpp"
     "std_msgs"
@@ -475,7 +476,13 @@ ament_export_dependencies(gazebo_ros)
 if(BUILD_TESTING)
   add_subdirectory(test)
   find_package(ament_lint_auto REQUIRED)
+  list(APPEND AMENT_LINT_AUTO_EXCLUDE
+    ament_cmake_cpplint
+  )
   ament_lint_auto_find_test_dependencies()
+  ament_cpplint(
+    FILTERS -build/include_order
+  )
 endif()
 
 if(NOT WIN32)
