@@ -53,7 +53,12 @@ def generate_launch_description():
         _plugin_command('force_system'), ' ',
         # Wait for (https://github.com/ros-simulation/gazebo_ros_pkgs/pull/941)
         # _plugin_command('force_system'), ' ',
-        _arg_command('profile'), ' ', LaunchConfiguration('profile'),
+        _arg_command('profile'), ' ', LaunchConfiguration('profile'), ' ',
+        # convenience parameter for params file
+        _arg_command('ros-args', condition=LaunchConfiguration('params_file')),
+        _arg_command('params-file', condition=LaunchConfiguration('params_file')),
+        LaunchConfiguration('params_file'),
+        _arg_command('', condition=LaunchConfiguration('params_file')), ' ',
         LaunchConfiguration('extra_gazebo_args'),
     ]
 
@@ -151,6 +156,10 @@ def generate_launch_description():
             'extra_gazebo_args', default_value='',
             description='Extra arguments to be passed to Gazebo'
         ),
+        DeclareLaunchArgument(
+            'params_file', default_value='',
+            description='Path to ROS 2 yaml parameter file'
+        ),
 
         # Specific to gazebo_ros
         DeclareLaunchArgument(
@@ -211,8 +220,11 @@ def _boolean_command(arg):
 
 
 # Add string commands if not empty
-def _arg_command(arg):
-    cmd = ['"--', arg, '" if "" != "', LaunchConfiguration(arg), '" else ""']
+def _arg_command(arg, condition=None):
+    if condition:
+        cmd = ['"--', arg, '" if "" != "', condition, '" else ""']
+    else:
+        cmd = ['"--', arg, '" if "" != "', LaunchConfiguration(arg), '" else ""']
     py_cmd = PythonExpression(cmd)
     return py_cmd
 
