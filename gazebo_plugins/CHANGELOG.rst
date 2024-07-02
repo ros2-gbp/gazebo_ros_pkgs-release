@@ -2,6 +2,40 @@
 Changelog for package gazebo_plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.8.0 (2024-07-02)
+------------------
+* Bloom-ignored all the packages except gazebo_msgs on jazzy (`#1534 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1534>`_)
+* Structured point cloud (`#1447 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1447>`_)
+* [ros2] Add steerangle publisher to ackermann_drive (`#1518 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1518>`_)
+* gazebo_plugins: Fix min Gazebo version for wheel slip (`#1480 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1480>`_)
+  This plugin now uses API which was released in Gazebo Classic 11.9.
+  Fixes: f642be7a206c
+* Add drawbar pull demo world and script (`#1364 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1364>`_)
+  Add a demo world with gazebo_ros_force plugins
+  added to the wheel-slip trisphere-cycle models
+  and a script for publishing time-varying drawbar
+  pull forces.
+  * gazebo_ros_p3d.hpp: fix typo
+* gazebo_ros_wheel_slip: publish member variable (`#1434 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1434>`_)
+  I have observed some problems during teardown if gzserver
+  receives a SIGINT while publishing the wheel slip.
+  To try to fix it, this stores the message to be published
+  as a class member rather than a stack variable.
+* Fix deprecation warnings (`#1429 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1429>`_)
+  * Fix deprecation warning in spawn_entity.py
+  * Fix cv_bridge deprecation warning
+  Co-authored-by: Steve Peters <scpeters@openrobotics.org>
+* Add rectification matrix in sdf, docs, and example usage (`#1423 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1423>`_)
+  * Add rectification matrix in sdf, docs, and example usage
+  * Remove whitespace
+  * Add spaces for linter
+  * Added descriptive comment
+  Co-authored-by: kbjeppes <kaden.b.jeppesen@nasa.gov>
+* gazebo_ros_camera: configure projection matrix from sdf (`#1409 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1409>`_)
+* change radiation type comment from ultrasonic to ultrasound (`#1421 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1421>`_)
+* Include missing header in camera plugin (`#1408 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1408>`_)
+* Contributors: Brian, Graziato Davide, Jacob Perron, Jose Luis Rivero, Nestor D. Pereira Neto, Scott K Logan, Steve Peters, kjeppesen1, swkim01
+
 3.7.0 (2022-06-13)
 ------------------
 * Add friction coefficient parameters (`#1393 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1393>`_)

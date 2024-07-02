@@ -2,6 +2,11 @@
 Changelog for package gazebo_dev
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.8.0 (2024-07-02)
+------------------
+* Bloom-ignored all the packages except gazebo_msgs on jazzy (`#1534 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1534>`_)
+* Contributors: Jose Luis Rivero
+
 3.7.0 (2022-06-13)
 ------------------
 

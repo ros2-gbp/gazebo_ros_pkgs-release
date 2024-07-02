@@ -2,6 +2,13 @@
 Changelog for package gazebo_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.8.0 (2024-07-02)
+------------------
+* Add a warning about the use of gazebo_msgs without Gazebo Classic (`#1533 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1533>`_)
+  The warning is added as an  extras config to appear on the consumer of the
+  package. Can be removed using the CMake parameter IGNORE_GAZEBO_MSGS_WARNING
+* Contributors: Jose Luis Rivero
+
 3.7.0 (2022-06-13)
 ------------------
 

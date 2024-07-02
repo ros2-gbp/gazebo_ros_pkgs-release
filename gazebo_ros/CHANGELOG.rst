@@ -2,6 +2,60 @@
 Changelog for package gazebo_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.8.0 (2024-07-02)
+------------------
+* Bloom-ignored all the packages except gazebo_msgs on jazzy (`#1534 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1534>`_)
+* Changed Throttler to use simTime instead of realTime (`#1325 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1325>`_)
+  Changed Throttler for the clock publisher to use simTime instead of realTime. This fixes gazebo_ros_pkgs`#1324 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1324>`_ and should allow ROS applications to continue to cooperate with Gazebo when the simulation is paused and is being stepped.
+* gzserver.launch.py: fix _arg_command (`#1502 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1502>`_)
+  Set default value of join_with paramete to '='.
+* gazebo_ros: Fix error message formatting in spawn_entity.py (`#1479 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1479>`_)
+  It appears that the gazebo_namespace was missing from this format
+  string.
+* gzserver.launch.py: add initial_sim_time argument
+  Expose gzserver CLI parameter added in
+  `gazebosim/gazebo-classic#3294 <https://github.com/gazebosim/gazebo-classic/issues/3294>`_.
+* gzserver.launch.py: refactor _arg_command
+  This refactors the _arg_command helper function to
+  remove the condition parameter (which is now unused
+  since the _conditional_command helper was added) and
+  always passes the LaunchConfiguration along with the
+  --command with a "join_with" separator. This simplifies
+  the `cmd` array definition.
+* gzserver.launch.py: _conditional_command helper
+  Add a helper function to replace the functionality
+  of _arg_command with the condition argument.
+* gazebo_ros_factory: more reliable model spawning (`#1453 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1453>`_)
+  Use the World::InsertModelString API instead of a
+  gazebo transport topic to spawn models. This is more
+  reliable, since gazebo transport may lose messages.
+* gazebo_ros: Add inline keyword to template definitions (`#1367 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1367>`_)
+  * gazebo_ros: Add inline keyword to template definitions
+  * Uncrustify
+  Co-authored-by: Gerard Heshusius <gHeshusius@lely.com>
+  Co-authored-by: Jacob Perron <jacob@openrobotics.org>
+* Set gzserver to log output to "both" in launch (`#1435 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1435>`_)
+  Log output to console and process log, otherwise no log messages
+  from gzserver or plugins are saved to disk.
+  Co-authored-by: Mark B. Allan <Mark.B.Allan@nasa.gov>
+* Fix deprecation warnings (`#1429 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1429>`_)
+  * Fix deprecation warning in spawn_entity.py
+  * Fix cv_bridge deprecation warning
+  Co-authored-by: Steve Peters <scpeters@openrobotics.org>
+* Fix console errors and warnings when launching gzserver (`#1414 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1414>`_)
+  * Remove spaces from gzserver and gzclient launch commands
+  They are not necessary and can cause console warnings/errors for some options.
+  * Fix console error when launching gzserver
+  If one of the substitutions in the gzserver command results in an empty string, then we see the following warning:
+  [Err] [Server.cc:472] Could not open file[]
+  [Wrn] [Server.cc:381] Falling back on worlds/empty.world
+  This is because gzserver is parsing any empty string as the world argument.
+  To fix the issue, we explicitly launch an empty world if no launch argument for the
+  world is given.
+  * Add test to check output
+  We expect some output on stderr when passing the 'verbose' argument.
+* Contributors: Gerard Heshusius, Jacob Perron, Jose Luis Rivero, Mark B. Allan, Scott K Logan, Steve Peters, shonigmann
+
 3.7.0 (2022-06-13)
 ------------------
 * Fix gzserver launch file breaking when no ros args provided (`#1395 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1395>`_)
