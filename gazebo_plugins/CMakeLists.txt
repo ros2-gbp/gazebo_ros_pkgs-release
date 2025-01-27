@@ -257,6 +257,9 @@ add_library(gazebo_ros_video SHARED
   src/gazebo_ros_video.cpp
 )
 target_include_directories(gazebo_ros_video PUBLIC include)
+if(${cv_bridge_VERSION} VERSION_GREATER_EQUAL 3.3.0)
+  target_compile_options(gazebo_ros_video PRIVATE -DCV_BRIDGE_HAS_HPP_HEADERS)
+endif()
 ament_target_dependencies(gazebo_ros_video
   "gazebo_ros"
   "image_transport"
@@ -450,7 +453,7 @@ if(ENABLE_PROFILER)
 endif()
 
 # gazebo_ros_wheel_slip
-if(NOT GAZEBO_VERSION VERSION_LESS 9.5)
+if(NOT GAZEBO_VERSION VERSION_LESS 11.9)
   add_library(gazebo_ros_wheel_slip SHARED
     src/gazebo_ros_wheel_slip.cpp
   )
@@ -531,13 +534,19 @@ install(TARGETS
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-if(NOT GAZEBO_VERSION VERSION_LESS 9.5)
+if(NOT GAZEBO_VERSION VERSION_LESS 11.9)
 install(TARGETS
     gazebo_ros_wheel_slip
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 endif()
+
+install(
+  PROGRAMS
+    scripts/wheel_slip_drawbar_pull_publisher.py
+    DESTINATION lib/${PROJECT_NAME}/
+)
 
 install(DIRECTORY
   worlds
