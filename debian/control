@@ -1,0 +1,12 @@
+Source: ros-humble-gazebo-plugins
+Section: misc
+Priority: optional
+Maintainer: Jose Luis Rivero <jrivero@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-humble-ament-cmake, ros-humble-ament-cmake-gtest <!nocheck>, ros-humble-ament-lint-auto <!nocheck>, ros-humble-ament-lint-common <!nocheck>, ros-humble-camera-info-manager, ros-humble-cv-bridge, ros-humble-cv-bridge <!nocheck>, ros-humble-gazebo-dev, ros-humble-gazebo-msgs, ros-humble-gazebo-ros, ros-humble-geometry-msgs, ros-humble-image-transport, ros-humble-nav-msgs, ros-humble-rclcpp, ros-humble-sensor-msgs, ros-humble-std-msgs, ros-humble-std-srvs, ros-humble-tf2-geometry-msgs, ros-humble-tf2-ros, ros-humble-trajectory-msgs, ros-humble-ros-workspace
+Homepage: http://classic.gazebosim.org/tutorials?cat=connect_ros
+Standards-Version: 3.9.2
+
+Package: ros-humble-gazebo-plugins
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-humble-camera-info-manager, ros-humble-cv-bridge, ros-humble-gazebo-dev, ros-humble-gazebo-msgs, ros-humble-gazebo-ros, ros-humble-geometry-msgs, ros-humble-image-transport, ros-humble-nav-msgs, ros-humble-rclcpp, ros-humble-sensor-msgs, ros-humble-std-msgs, ros-humble-std-srvs, ros-humble-tf2-geometry-msgs, ros-humble-tf2-ros, ros-humble-trajectory-msgs, ros-humble-ros-workspace
+Description: Robot-independent Gazebo plugins for sensors, motors and dynamic reconfigurable components.
