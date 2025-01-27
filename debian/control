@@ -1,0 +1,12 @@
+Source: ros-humble-gazebo-ros
+Section: misc
+Priority: optional
+Maintainer: Jose Luis Rivero <jrivero@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-humble-ament-cmake, ros-humble-ament-cmake-gtest <!nocheck>, ros-humble-ament-lint-auto <!nocheck>, ros-humble-ament-lint-common <!nocheck>, ros-humble-builtin-interfaces, ros-humble-gazebo-dev, ros-humble-gazebo-msgs, ros-humble-geometry-msgs <!nocheck>, ros-humble-launch-testing-ament-cmake <!nocheck>, ros-humble-rcl, ros-humble-rclcpp, ros-humble-rclpy, ros-humble-rmw, ros-humble-ros2run <!nocheck>, ros-humble-sensor-msgs <!nocheck>, ros-humble-std-msgs <!nocheck>, ros-humble-std-srvs, ros-humble-tinyxml-vendor, ros-humble-ros-workspace
+Homepage: http://classic.gazebosim.org/tutorials?cat=connect_ros
+Standards-Version: 3.9.2
+
+Package: ros-humble-gazebo-ros
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3-lxml, ros-humble-builtin-interfaces, ros-humble-gazebo-dev, ros-humble-gazebo-msgs, ros-humble-geometry-msgs, ros-humble-launch-ros, ros-humble-rcl, ros-humble-rclcpp, ros-humble-rclpy, ros-humble-rmw, ros-humble-sensor-msgs, ros-humble-std-srvs, ros-humble-tinyxml-vendor, ros-humble-ros-workspace
+Description: Utilities to interface with Gazebo through ROS.
